@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# If we want to add more flexibility for memory percentages etc
+# it might be worth rewriting it in python.
+
+SYS_MEM_BYTES=`free -b | grep Mem | tr -s [:blank:] : | cut -d: -f 2`
+PAGESIZE=`getconf PAGESIZE`
+
+# http://www.postgresql.org/docs/current/static/runtime-config-resource.html#GUC-SHARED-BUFFERS
+SHARED_BUFFERS_MB=`expr \( $SYS_MEM_BYTES \* 4 \) / 10 / 1024 / 1024`       # 40% of total memory in mb
+EFFECTIVE_CACHE_SIZE_MB=`expr \( $SYS_MEM_BYTES \* 3 \) / 4 / 1024 / 1024`  # 75% of total memory in mb
+SHMALL=`echo "$SYS_MEM_BYTES / $PAGESIZE" | bc`
+
+cat <<EOF
+{
+    "ansible_facts" : {
+        "postgresql_sys_mem_bytes" : $SYS_MEM_BYTES,
+        "postgresql_pagesize_bytes" : $PAGESIZE,
+        "postgresql_shmall" : $SHMALL,
+        "postgresql_max_open_files" : 100000,
+        "postgresql_shared_buffers" : $SHARED_BUFFERS_MB,
+        "postgresql_effective_cache_size" : $EFFECTIVE_CACHE_SIZE_MB
+    }
+}
+EOF
+

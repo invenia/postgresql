@@ -11,6 +11,15 @@ postgresql_default_auth_method: "trust"
 postgresql_cluster_name: "main"
 postgresql_cluster_reset: false
 
+# Dynamic memory values, these will be ignored
+# if postgresql_dynamic_memory is set to false
+postgresql_dynamic_memory: false
+postgresql_sys_mem_bytes: -1
+postgresql_pagesize_bytes: -1
+postgresql_shmall: -1
+postgresql_shmmax: -1
+postgresql_max_file_size: 50000
+
 # Extensions
 postgresql_ext_install_contrib: no
 postgresql_ext_install_dev_headers: no
