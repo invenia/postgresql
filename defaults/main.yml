@@ -2,6 +2,7 @@
 
 # Basic settings
 postgresql_version: 9.3
+postgresql_distribution: "{{ansible_distribution_release}}"
 postgresql_encoding: 'UTF-8'
 postgresql_locale: 'en_US.UTF-8'
 

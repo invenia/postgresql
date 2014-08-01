@@ -3,6 +3,8 @@
 # If we want to add more flexibility for memory percentages etc
 # it might be worth rewriting it in python.
 
+# Useful article about setting SHMALL and SHMMAX
+# http://dbasolutions.wikispaces.com/SHMMAX+and+SHMALL
 SYS_MEM_BYTES=`free -b | grep Mem | tr -s [:blank:] : | cut -d: -f 2`
 PAGESIZE=`getconf PAGESIZE`
 
