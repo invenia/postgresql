@@ -44,6 +44,8 @@
   sudo: yes
   sudo_user: postgres
   when: postgresql_cluster_reset
+  register: result
+  failed_when: result.rc != 0 and "'specified cluster does not exist' not in result.stderr"
 
 - name: PostgreSQL | Reset the cluster - create a new one (with specified encoding and locale)
   shell: pg_createcluster --start --locale {{postgresql_locale}} -e {{postgresql_encoding}} -d {{postgresql_data_directory}} {{postgresql_version}} {{postgresql_cluster_name}}
